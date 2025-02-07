@@ -1,0 +1,15 @@
+\documentclass{article}
+\usepackage{pdfpages}
+\usepackage[paperwidth=8.5in, paperheight=11in]{geometry}
+% \pagestyle{plain}                               % Don't use page numbers
+\pagenumbering{gobble}                            % Don't use page numbers
+
+\begin{document}
+      \setlength\voffset{+0.0in}                  % adj. vert. offset as needed
+      \setlength\hoffset{+0.0in}                  % adj. horiz. offset as needed
+      \includepdfmerge[nup=1x3,
+                       noautoscale=true,          % set "false" if larger inputs
+                       frame=false,               % set "true" for frames
+                       templatesize={8.5in}{3.66in}] % adjust as needed
+                       {/tmp/tmp1.pdf,/tmp/tmp2.pdf,/tmp/tmp3.pdf}  % modify for file names
+\end{document}
