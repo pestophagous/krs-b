@@ -1,0 +1,120 @@
+krs_v1
+# ^ first line has to be recognized as format-version
+# <-- pound sign in position 0 of a line makes line a comment
+# ----- or more at start (twice) is item delimeter. top and bottom of each item
+# then problem uniq-id (unique across problem set)
+# then answer
+# then comma-separated tags. tag names can have anything (within reason?) except comma
+# then ---
+# the rest (until delimiter) will be inserted into the LaTeX worksheet
+##### when printing sheet, must put date with uniq-id
+##### when generating answer key, need option of which uniq-id to start with
+##### nice-to-have: print summary of all tags. find 'distance' between tags in case plural is only distinguishing feature
+-----
+-----
+df33477
+x = A/(5 + 8y) {such that (5 + 8y) != 0}
+gcf,factoring,rewrite
+---
+Solve for x
+$$ A = 5x + 8xy $$
+-----
+-----
+a844695
+x=1, x=-1
+gcf,factoring,solve-for-x
+---
+Solve
+$$ 4x^2 - 4 = 0 $$
+-----
+-----
+e58d355
+$$ 5uv(u - 3v)^2 $$
+gcf,factoring
+---
+Factor completely
+$$ 5u^3v - 30u^2v^2 + 45uv^3 $$
+-----
+-----
+76fe764
+$$ (-\infty, \infty) $$
+inequalities,interval-notation
+---
+Graph. Then write in interval notation.
+$$\{ x | 7 \ge x \text{ or } x > 3 \} $$
+-----
+-----
+36f90ed
+-2x (5x - 6) (2x - 5)
+gcf,factoring,factoring-two-tables
+---
+Factor completely
+$$ -20x^3 + 74x^2 - 60x $$
+-----
+-----
+798b8f4
+$$ \frac{19}{12} $$
+lcm,fractions
+---
+$$ \frac{5}{6} + \frac{3}{4} $$
+-----
+-----
+c616126
+$\$37.80$
+percent,word-problems,solve-for-x
+---
+The price of a book after a 25% discount is $\$28.35$. What was the original price?
+-----
+-----
+54157ff
+$$ x = 1, x = \frac{1}{2} $$
+gcf,factoring,solve-for-x
+---
+$$ 8x^2 = 12x - 4 $$
+-----
+-----
+c57a80d
+x=-2, x=8
+factoring,solve-for-x
+---
+Solve
+$$ -x^2 + 6x = -16 $$
+-----
+-----
+3a9a7f3
+$$ y = \frac{2x}{5} - 2 $$
+rewrite
+---
+Solve for y
+$$ 2x - 5y = 10 $$
+-----
+-----
+3f1dca1
+$$ \frac{b^3}{a^2} $$
+exponents,canceling,fractions
+---
+$$ \left( \frac{a^2}{b^3}  \right)^{-1} $$
+-----
+-----
+e958369
+$$ x = \frac{4}{3} $$
+lcm,fractions,canceling,solve-for-x
+---
+$$ \frac{x}{4} + \frac{1}{3} = \frac{2x}{4} $$
+-----
+-----
+
+
+
+
+
+
+
+#a557c09
+#f378fad
+#3b49ff6
+#9f02c27
+#69aad22
+#6ff59f7
+#dd74b4a
+#12b1ca0
