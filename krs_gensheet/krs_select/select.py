@@ -8,6 +8,11 @@ class Selector:
         self._inputset = inputset
 
     def get_worksheets(self):
+        # TODO-NEXT: use the real inputset! we have it now.
+        print('in get_worksheets:')
+        print(self._inputset._ordered_items)
+        print('^^ in get_worksheets')
+        assert False
         s = page.WorksheetPage(
             unique_ids=['a844695'],
             prompts=['$$ 4x^2 - 4 = 0 $$'])

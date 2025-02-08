@@ -18,14 +18,8 @@ class Set:
     def __init__(self):
         self._ordered_items = []
 
-        # Dummy for now. TODO: real impl
-        self._ordered_items.append(
-            Item(
-                unique_id='a844695',
-                answer='x=1, x=-1',
-                tags=['gcf', 'factoring', 'solve-for-x'],
-                prompt='$$ 4x^2 - 4 = 0 $$'
-            ))
-
     def get_all_items(self):
         return copy.deepcopy(self._ordered_items)
+
+    def append(self, item):
+        self._ordered_items.append(item)
