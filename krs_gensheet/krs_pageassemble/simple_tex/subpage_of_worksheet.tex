@@ -1,14 +1,15 @@
 % \documentclass{article}
 \documentclass[fleqn]{report}
 
-\usepackage[papersize={8.5in,3.66in},
+\usepackage[papersize={8.5in,3.5in},
   lmargin=0.6in,
   rmargin=0.6in,
-  tmargin=0.6in,
-  bmargin=0.6in]{geometry}
+  tmargin=0.2in,
+  bmargin=0in]{geometry}
 
 \usepackage{parskip}
 \usepackage{amsmath}
+\usepackage{lmodern} % for fontsize. https://tex.stackexchange.com/q/322256/17482
 
 \linespread{1.3}
 
@@ -20,7 +21,14 @@
 
 \begin{document}
 \pagenumbering{gobble}
+\abovedisplayskip=0pt
+\abovedisplayshortskip=0pt
+\belowdisplayskip=0pt
+\belowdisplayshortskip=0pt
+\abovecaptionskip=0pt
+\belowcaptionskip=0pt
 
-KRSREPLACEME
+
+{\fontsize{8}{8}\selectfont (KRSREPLACEMEID.)} KRSREPLACEMEPROMPT
 
 \end{document}

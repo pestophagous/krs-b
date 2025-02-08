@@ -43,7 +43,10 @@ class Assemblor:
 
         for i, prompt in enumerate(worksheet.prompts):
             # TODO: when printing sheet, must put date with uniq-id
-            tex_content = contents.replace('KRSREPLACEME', prompt)
+            tex_content = contents.replace(
+                'KRSREPLACEMEPROMPT', prompt)
+            tex_content = tex_content.replace(
+                'KRSREPLACEMEID', worksheet.unique_ids[i])
 
             with open(f"tmp{i+1}.tex", "w") as text_file:
                 text_file.write(tex_content)
@@ -54,7 +57,10 @@ class Assemblor:
         while i < (_ITEMS_PER_WS_PAGE-1):
             i += 1
             # Nice-to-have: why did empty string fail where single period works?
-            tex_content = contents.replace('KRSREPLACEME', '.')
+            tex_content = contents.replace(
+                'KRSREPLACEMEID', '')
+            tex_content = tex_content.replace(
+                'KRSREPLACEMEPROMPT', '')
 
             with open(f"tmp{i+1}.tex", "w") as text_file:
                 text_file.write(tex_content)
