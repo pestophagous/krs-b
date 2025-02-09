@@ -63,7 +63,7 @@ c616126
 $\$37.80$
 percent,word-problems,solve-for-x
 ---
-The price of a book after a 25% discount is $\$28.35$. What was the original price?
+The price of a book after a 25\% discount is $\$28.35$. What was the original price?
 -----
 -----
 54157ff
