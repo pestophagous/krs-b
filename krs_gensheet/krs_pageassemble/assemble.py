@@ -1,3 +1,4 @@
+import datetime
 import os
 import subprocess
 from pathlib import Path
@@ -74,15 +75,32 @@ class Assemblor:
         subprocess.run(
             ["pdflatex", f"-jobname=worksheet{worksheet.unique_ids[0]}", template])
 
-    def print_one_answerkey(self, worksheet, *, page):
+    def print_one_answerkey(self, answerkey, *, page):
         # FUTURE: need option of which uniq-id to start with
         # when printing sheet, must put date
 
-        # def get_answerkeys(self):
-        #     s = page.AnswerKeyPage(
-        #         unique_ids=['a844695'],
-        #         answers=['x=1, x=-1'])
-        #     return [s]
-
         # TODO: logger
         print('print_one_answerkey')
+
+        template = os.path.normpath(os.path.join(
+            os.path.dirname(__file__), 'simple_tex', 'page_of_answerkey.tex'))
+        contents = Path(template).read_text()
+
+        keyed_answers = ''
+        for i, answer in enumerate(answerkey.answers):
+            # TODO: when printing sheet, must put date with uniq-id
+            keyed_answers += answerkey.unique_ids[i]
+            keyed_answers += '. '
+            keyed_answers += answer
+            keyed_answers += '\n\n'
+
+        tex_content = contents.replace(
+            'KRSREPLACEMEANSWERS', keyed_answers)
+
+        with open("tmpanswerkey.tex", "w") as text_file:
+            text_file.write(tex_content)
+
+        timesuffix = datetime.datetime.now().isoformat().replace(':', '_')
+        outname = f'answers_{timesuffix}'
+        subprocess.run(
+            ["pdflatex", f"-jobname={outname}", "tmpanswerkey.tex"])

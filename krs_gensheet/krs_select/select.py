@@ -46,6 +46,7 @@ class Selector:
         # debatable if we ever need to filter the answers
         keypages = []
 
+        # FUTURE: need option of which uniq-id to start with.
         # We shuffle for worksheets. We >sort< for answer key. do we need copies?
         sorted_items = sorted(self._inputset._ordered_items,
                               key=lambda x: x.unique_id)
