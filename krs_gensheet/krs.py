@@ -9,10 +9,14 @@ from krs_select import select
 
 
 def main():
-    # FUTURE: pass in more than one input file
-    p = os.path.normpath(os.path.join(os.getcwd(), sys.argv[1]))
-    print(p)  # TODO: logger
-    extractor = extract_text.ExtractText([p])
+    inputfiles = []
+    inputfiles.append(os.path.normpath(os.path.join(os.getcwd(), sys.argv[1])))
+    if len(sys.argv) > 2:
+        for i in range(2, len(sys.argv)):
+            inputfiles.append(os.path.normpath(
+                os.path.join(os.getcwd(), sys.argv[i])))
+
+    extractor = extract_text.ExtractText(inputfiles)
     inputset = extractor.parse()
     selector = select.Selector(inputset=inputset)
     assemblor = assemble.Assemblor(

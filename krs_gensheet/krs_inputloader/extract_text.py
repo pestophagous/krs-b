@@ -92,6 +92,7 @@ class ExtractText:
                     while True:
                         item = self._parse_item(line_iter=file)
                         if item:
+                            # TODO: here or in Set.append check uniqueness of id
                             ongoing_set.append(item)
                         else:
                             return

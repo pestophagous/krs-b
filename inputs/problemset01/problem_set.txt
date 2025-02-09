@@ -103,18 +103,3 @@ lcm,fractions,canceling,solve-for-x
 \[ \frac{x}{4} + \frac{1}{3} = \frac{2x}{4} \]
 -----
 -----
-
-
-
-
-
-
-
-#a557c09
-#f378fad
-#3b49ff6
-#9f02c27
-#69aad22
-#6ff59f7
-#dd74b4a
-#12b1ca0
