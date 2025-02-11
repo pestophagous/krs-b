@@ -62,7 +62,7 @@ class Selector:
                 # reset 2 parallel lists.
                 p = page.AnswerKeyPage(
                     unique_ids=ids_on_one_page,
-                    prompts=answers_on_one_page)
+                    answers=answers_on_one_page)
                 keypages.append(p)
                 ids_on_one_page = []
                 answers_on_one_page = []
