@@ -23,33 +23,153 @@ Clear parentheses and combine like terms
 \[ \frac{2}{3}ab^2 - 3ab + \frac{1}{2}b^2 - 2ab^2 + \frac{1}{4}b^2 \]
 -----
 -----
+2c64673
+$ x = 6.4 $
+solve-for-x,fractions,canceling,sp25_1.2
+---
+Solve
+\[ \frac{x}{16} = 0.4 \]
+-----
+-----
+4b09967
+$ x = -\frac{1}{2} $
+solve-for-x,sp25_1.2
+---
+Solve
+\[ 2x - 3(2x+2) = 1 - 5(4x+3) \]
+-----
+-----
+5766846
+$ x = \frac{1a}{2} $
+rewrite,solve-for-x,sp25_1.2
+---
+Solve for x
+\[ 10x-2a=3a \]
+-----
+-----
+cfd1a83
+$ z = \frac{2A}{3} - 1 $
+rewrite,solve-for-x,sp25_1.2
+---
+Solve for z
+\[ A = \frac{3}{2}(z+1) \]
+-----
+-----
+59c8818
+$ y = \frac{3x}{5} - 2 $
+rewrite,solve-for-x,sp25_1.2
+---
+Solve for y
+\[ 3x - 5y = 10 \]
+-----
+-----
+66be84b
+identity. all real numbers. R
+identity-or-contradiction,solve-for-x,sp25_1.2
+---
+Solve
+\[ 6(x-2) = 5x-(12-x) \]
+-----
+-----
+5b06f97
+contradiction. no solution. {}
+identity-or-contradiction,solve-for-x,sp25_1.2
+---
+Solve
+\[ 6(x+2) = 5x-(12-x) \]
+-----
+-----
+9ee6eb6
+$ t = -\frac{3}{4} $
+solve-for-x,sp25_1.2,fractions
+---
+Solve
+\[ -t = \frac{3}{4} \]
+-----
+-----
+3dc6d77
+$ x = 4 $
+solve-for-x,sp25_1.2,fractions
+---
+Solve
+\[ \frac{x}{8} = \frac{1}{2} \]
+-----
+-----
+680554d
+$ z = 3$
+solve-for-x,sp25_1.2,parentheses
+---
+Solve
+\[ -2 [5-(2z+1)] - 4 = 2(3-z) \]
+-----
+-----
+87e96a6
+$ w = -37 $
+solve-for-x,sp25_1.2,parentheses
+---
+Solve
+\[ 3[w-(10-w)] = 7(w+1) \]
+-----
+-----
+c0ce01f
+identity. all real numbers. R
+identity-or-contradiction,solve-for-x,sp25_1.2
+---
+Solve
+\[ -7x + 8 +4x = -3(x-3)-1 \]
+-----
+-----
+4680d14
+contradiction. no solution. {}
+identity-or-contradiction,solve-for-x,sp25_1.2
+---
+Solve
+\[ 2x-4+8x=7x-8+3x \]
+-----
+-----
+e6ede3a
+contradiction. no solution. {}
+identity-or-contradiction,solve-for-x,sp25_1.2
+---
+Solve
+\[ 3x+6 = 3x \]
+-----
+-----
+8bffecc
+identity. all real numbers. R
+identity-or-contradiction,solve-for-x,sp25_1.2
+---
+Solve
+\[ 4x + 1 = 2(2x+1)-1 \]
+-----
+-----
+397e535
+$ y = 3 - \frac{3 x}{2} $
+rewrite,solve-for-x,sp25_1.2
+---
+Solve for y
+\[ \frac{1}{2}x + \frac{1}{3}y = 1 \]
+-----
+-----
+a620173
+$ c = -a - b + P $
+rewrite,solve-for-x,sp25_1.2
+---
+Solve for c
+\[ P = a+b+c \]
+-----
+-----
+2a2deca
+B = (3V)/h and h!=0
+rewrite,solve-for-x,sp25_1.2
+---
+Solve for B
+\[ V = \frac{1}{3}Bh \]
+-----
+-----
 
 
 
-
-
-
-
-
-
-#2c64673
-#4b09967
-#5766846
-#cfd1a83
-#59c8818
-#66be84b
-#5b06f97
-#9ee6eb6
-#3dc6d77
-#680554d
-#87e96a6
-#c0ce01f
-#4680d14
-#e6ede3a
-#8bffecc
-#397e535
-#a620173
-#2a2deca
 #7eae56e
 #9f6bf43
 #c6b37ba
