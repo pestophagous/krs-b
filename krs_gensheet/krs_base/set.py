@@ -28,3 +28,11 @@ class Set:
 
         self._item_ids[item.unique_id] = 1
         self._ordered_items.append(item)
+
+    def union(self, other_set, *, fail_on_duplicate=True):
+        for item in other_set._ordered_items:
+            try:
+                self.append(item)
+            except ValueError as e:
+                if fail_on_duplicate:
+                    raise e

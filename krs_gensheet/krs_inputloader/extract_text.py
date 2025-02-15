@@ -71,13 +71,15 @@ class ExtractText:
         # TODO: print some error or warning, ideally with line num! (except EOF)
         return None
 
-    def _parse_file(self, *, filepath, ongoing_set):
+    def _parse_file(self, *, filepath):
+        s = set.Set()
+
         with open(filepath) as file:
             first_line = next(file).rstrip()
             if first_line != _VALID_LINE1_FORMAT_VERSION_MARK:
                 # TODO: logger
                 print('Invalid file')
-                return
+                return s
 
             expect_other_delim_half = False
 
@@ -92,9 +94,9 @@ class ExtractText:
                     while True:
                         item = self._parse_item(line_iter=file)
                         if item:
-                            ongoing_set.append(item)
+                            s.append(item)
                         else:
-                            return
+                            return s
                 elif line.startswith(_HALF_OF_DELIM):
                     expect_other_delim_half = True
                 else:
@@ -104,7 +106,8 @@ class ExtractText:
         s = set.Set()
 
         for f in self._files:
-            self._parse_file(filepath=f, ongoing_set=s)
+            set_from_file = self._parse_file(filepath=f)
+            s.union(set_from_file, fail_on_duplicate=True)
 
         # TODO: logger
         print(len(s._ordered_items))
