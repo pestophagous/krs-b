@@ -64,7 +64,7 @@ Solve for y
 -----
 -----
 66be84b
-identity. all real numbers. R
+identity. all real numbers. $ \mathbb{R} $
 identity-or-contradiction,solve-for-x,sp25_1.2
 ---
 Solve
@@ -112,7 +112,7 @@ Solve
 -----
 -----
 c0ce01f
-identity. all real numbers. R
+identity. all real numbers. $ \mathbb{R} $
 identity-or-contradiction,solve-for-x,sp25_1.2
 ---
 Solve
@@ -136,7 +136,7 @@ Solve
 -----
 -----
 8bffecc
-identity. all real numbers. R
+identity. all real numbers. $ \mathbb{R} $
 identity-or-contradiction,solve-for-x,sp25_1.2
 ---
 Solve
