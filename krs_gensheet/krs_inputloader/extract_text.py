@@ -10,6 +10,19 @@ _INNER_DELIM = '---'
 logger = logging.getLogger('krs_studying.' + __name__)
 
 
+class _WrappedIter:
+    def __init__(self, line_iter):
+        self._line_num = 0
+        self._iter = line_iter
+
+    def get_next(self, *, dont_strip=False):
+        l = next(self._iter)  # can raise StopIteration
+        self._line_num += 1
+        if not dont_strip:
+            l = l.rstrip("\r\n")
+        return (self._line_num, l)
+
+
 class ExtractText:
     def __init__(self, files):
         for f in files:
@@ -20,9 +33,9 @@ class ExtractText:
     def _next_non_comment(self, *, line_iter):
         while True:
             try:
-                l = next(line_iter)
+                linenum, l = line_iter.get_next()
                 if not l.startswith('#'):
-                    return l.rstrip("\r\n")
+                    return l
             except StopIteration:
                 return None
 
@@ -34,7 +47,7 @@ class ExtractText:
 
         while True:
             try:
-                line = next(line_iter)
+                linenum, line = line_iter.get_next(dont_strip=True)
             except StopIteration:
                 return prompt
 
@@ -78,15 +91,29 @@ class ExtractText:
         s = set.Set()
 
         with open(filepath) as file:
-            first_line = next(file).rstrip()
+            line_iter = _WrappedIter(file)
+
+            try:
+                linenum, first_line = line_iter.get_next()
+            except StopIteration:
+                logger.error(f'Empty file: {filepath}')
+                return s
+
             if first_line != _VALID_LINE1_FORMAT_VERSION_MARK:
-                logger.warning('Invalid file')
+                logger.error(
+                    f'File lacks valid version_marker on first line: {filepath}')
                 return s
 
             expect_other_delim_half = False
 
-            for l in file:
-                line = l.rstrip("\r\n")
+            while True:
+                try:
+                    linenum, line = line_iter.get_next()
+                except StopIteration:
+                    logger.error(
+                        f'Failed to find any items in file: {filepath}')
+                    return s
+
                 if not line:
                     continue  # skip blank line when not "in" an item
                 if line and line[0] == '#':
@@ -94,7 +121,7 @@ class ExtractText:
 
                 if line.startswith(_HALF_OF_DELIM) and expect_other_delim_half:
                     while True:
-                        item = self._parse_item(line_iter=file)
+                        item = self._parse_item(line_iter=line_iter)
                         if item:
                             s.append(item)
                         else:
