@@ -1,4 +1,7 @@
+import logging
 from dataclasses import dataclass, field
+
+logger = logging.getLogger('krs_studying.' + __name__)
 
 
 @dataclass

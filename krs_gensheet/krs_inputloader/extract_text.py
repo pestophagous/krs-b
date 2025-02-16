@@ -1,3 +1,4 @@
+import logging
 import os
 
 from krs_base import set
@@ -5,6 +6,8 @@ from krs_base import set
 _VALID_LINE1_FORMAT_VERSION_MARK = 'krs_v1'
 _HALF_OF_DELIM = '-----'
 _INNER_DELIM = '---'
+
+logger = logging.getLogger('krs_studying.' + __name__)
 
 
 class ExtractText:
@@ -68,7 +71,7 @@ class ExtractText:
                                 prompt=the_prompt)
                             return item
 
-        # TODO: print some error or warning, ideally with line num! (except EOF)
+        # TODO: log some error or warning, ideally with line num! (except EOF)
         return None
 
     def _parse_file(self, *, filepath):
@@ -77,8 +80,7 @@ class ExtractText:
         with open(filepath) as file:
             first_line = next(file).rstrip()
             if first_line != _VALID_LINE1_FORMAT_VERSION_MARK:
-                # TODO: logger
-                print('Invalid file')
+                logger.warning('Invalid file')
                 return s
 
             expect_other_delim_half = False
@@ -110,7 +112,5 @@ class ExtractText:
             set_from_file.drop_all_but(percent=1.0)
             s.union(set_from_file, fail_on_duplicate=True)
 
-        # TODO: logger
-        print(len(s._items))
-        print(s._items)
+        logger.info(f'Total items: {len(s._items)}')
         return s

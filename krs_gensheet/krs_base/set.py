@@ -1,4 +1,5 @@
 import copy
+import logging
 import math
 import random
 from dataclasses import dataclass, field
@@ -6,6 +7,8 @@ from dataclasses import dataclass, field
 # @dataclass(eq=True, frozen=True)
 # @dataclass gives us __repr__ printability for free
 # (eq=True, frozen=True) gives us hashability
+
+logger = logging.getLogger('krs_studying.' + __name__)
 
 
 @dataclass
@@ -56,11 +59,9 @@ class Set:
         if num_to_drop == item_count:
             num_to_drop -= 1
 
-        # TODO: logger
-        print(f'dropping {num_to_drop} of {item_count}')
+        logger.info(f'dropping {num_to_drop} of {item_count}')
         num_to_keep = item_count - num_to_drop
 
         random.shuffle(self._items)
         self._items = self._items[0:num_to_keep]
-        # TODO: logger
-        print(f'remaining {len(self._items)}')
+        logger.info(f'remaining {len(self._items)}')

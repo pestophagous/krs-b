@@ -1,4 +1,5 @@
 import datetime
+import logging
 import os
 import subprocess
 from pathlib import Path
@@ -8,6 +9,8 @@ from krs_pageassemble import page
 # FUTURE: different possibilities for items-per-page.
 _ITEMS_PER_WS_PAGE = 3
 _ITEMS_PER_AK_PAGE = 24
+
+logger = logging.getLogger('krs_studying.' + __name__)
 
 
 class Assemblor:
@@ -36,8 +39,7 @@ class Assemblor:
             self.print_one_answerkey(a, page=i)
 
     def print_one_worksheet(self, worksheet, *, page):
-        # TODO: logger
-        print('print_one_worksheet')
+        logger.info('print_one_worksheet')
         template = os.path.normpath(os.path.join(
             os.path.dirname(__file__), 'simple_tex', 'subpage_of_worksheet.tex'))
         contents = Path(template).read_text()
@@ -79,8 +81,7 @@ class Assemblor:
         # FUTURE: need option of which uniq-id to start with
         # when printing sheet, must put date
 
-        # TODO: logger
-        print('print_one_answerkey')
+        logger.info('print_one_answerkey')
 
         template = os.path.normpath(os.path.join(
             os.path.dirname(__file__), 'simple_tex', 'page_of_answerkey.tex'))

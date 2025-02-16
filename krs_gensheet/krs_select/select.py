@@ -1,6 +1,9 @@
+import logging
 import random
 
 from krs_pageassemble import assemble, page
+
+logger = logging.getLogger('krs_studying.' + __name__)
 
 
 class Selector:

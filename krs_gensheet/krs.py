@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import logging
 import os
 import sys
 
@@ -7,8 +8,19 @@ from krs_inputloader import extract_text
 from krs_pageassemble import assemble
 from krs_select import select
 
+logger = None  # This is initialized in __main__
+
 
 def main():
+    global logger
+
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format="%(asctime)s [%(levelname)s] [%(name)s]: %(message)s",
+    )
+
+    logger = logging.getLogger('krs_studying.' + __name__)
+
     inputfiles = []
     inputfiles.append(os.path.normpath(os.path.join(os.getcwd(), sys.argv[1])))
     if len(sys.argv) > 2:
@@ -24,7 +36,7 @@ def main():
         answerkeys=selector.get_answerkeys())
     assemblor.run()
 
-    print('Done.')  # TODO: logger
+    logger.info('Done')
 
 
 if __name__ == '__main__':
