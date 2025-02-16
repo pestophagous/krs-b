@@ -78,9 +78,6 @@ class Assemblor:
             ["pdflatex", f"-jobname=worksheet{worksheet.unique_ids[0]}", template])
 
     def print_one_answerkey(self, answerkey, *, page):
-        # FUTURE: need option of which uniq-id to start with
-        # when printing sheet, must put date
-
         logger.info('print_one_answerkey')
 
         template = os.path.normpath(os.path.join(
@@ -89,7 +86,6 @@ class Assemblor:
 
         keyed_answers = ''
         for i, answer in enumerate(answerkey.answers):
-            # TODO: when printing sheet, must put date with uniq-id
             keyed_answers += answerkey.unique_ids[i]
             keyed_answers += '. '
             keyed_answers += answer

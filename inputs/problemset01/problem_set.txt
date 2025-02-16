@@ -7,8 +7,7 @@ krs_v1
 # then comma-separated tags. tag names can have anything (within reason?) except comma
 # then ---
 # the rest (until delimiter) will be inserted into the LaTeX worksheet
-##### when printing sheet, must put date with uniq-id
-##### when generating answer key, need option of which uniq-id to start with
+##### when printing sheet, would be nice to add datetime
 ##### nice-to-have: print summary of all tags. find 'distance' between tags in case plural is only distinguishing feature
 -----
 -----
