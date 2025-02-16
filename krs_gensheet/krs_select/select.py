@@ -14,11 +14,11 @@ class Selector:
         sheets = []
 
         # We shuffle for worksheets. We >sort< for answer key. do we need copies?
-        random.shuffle(self._inputset._ordered_items)
+        random.shuffle(self._inputset._items)
 
         ids_on_one_page = []
         prompts_on_one_page = []
-        for item in self._inputset._ordered_items:
+        for item in self._inputset._items:
             ids_on_one_page.append(item.unique_id)
             prompts_on_one_page.append(item.prompt)
 
@@ -48,7 +48,7 @@ class Selector:
 
         # FUTURE: need option of which uniq-id to start with.
         # We shuffle for worksheets. We >sort< for answer key. do we need copies?
-        sorted_items = sorted(self._inputset._ordered_items,
+        sorted_items = sorted(self._inputset._items,
                               key=lambda x: x.unique_id)
 
         ids_on_one_page = []

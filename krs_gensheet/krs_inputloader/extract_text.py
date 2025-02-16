@@ -107,9 +107,10 @@ class ExtractText:
 
         for f in self._files:
             set_from_file = self._parse_file(filepath=f)
+            set_from_file.drop_all_but(percent=1.0)
             s.union(set_from_file, fail_on_duplicate=True)
 
         # TODO: logger
-        print(len(s._ordered_items))
-        print(s._ordered_items)
+        print(len(s._items))
+        print(s._items)
         return s
