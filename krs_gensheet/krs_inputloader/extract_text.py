@@ -1,11 +1,13 @@
 import logging
 import os
+import pathlib
 
 from krs_base import set
 
 _VALID_LINE1_FORMAT_VERSION_MARK = 'krs_v1'
 _HALF_OF_DELIM = '-----'
 _INNER_DELIM = '---'
+_VALID_LINE1_MARK_METAFILE = 'krs_metalist_v1'
 
 logger = logging.getLogger('krs_studying.' + __name__)
 
@@ -30,11 +32,14 @@ class ExtractText:
 
         self._files = files
 
-    def _next_non_comment(self, *, line_iter):
+    def _next_non_comment(self, *, line_iter, also_skip_blanks=False):
         while True:
             try:
                 linenum, l = line_iter.get_next()
-                if not l.startswith('#'):
+                passes_any_blankness_setting = (
+                    (not also_skip_blanks) or (len(l) > 0))
+
+                if (not l.startswith('#')) and passes_any_blankness_setting:
                     return l
             except StopIteration:
                 return None
@@ -96,12 +101,12 @@ class ExtractText:
             try:
                 linenum, first_line = line_iter.get_next()
             except StopIteration:
-                logger.error(f'Empty file: {filepath}')
+                logger.error(f'Empty file: "{filepath}"')
                 return s
 
             if first_line != _VALID_LINE1_FORMAT_VERSION_MARK:
                 logger.error(
-                    f'File lacks valid version_marker on first line: {filepath}')
+                    f'File lacks valid version_marker on first line: "{filepath}"')
                 return s
 
             expect_other_delim_half = False
@@ -111,7 +116,7 @@ class ExtractText:
                     linenum, line = line_iter.get_next()
                 except StopIteration:
                     logger.error(
-                        f'Failed to find any items in file: {filepath}')
+                        f'Failed to find any items in file: "{filepath}"')
                     return s
 
                 if not line:
@@ -131,12 +136,60 @@ class ExtractText:
                 else:
                     expect_other_delim_half = False
 
+    def _file_is_metalist(self, *, filepath):
+        with open(filepath) as file:
+            line_iter = _WrappedIter(file)
+            try:
+                linenum, first_line = line_iter.get_next()
+            except StopIteration:
+                logger.error(f'Empty file: "{filepath}"')
+                return False
+
+            if first_line == _VALID_LINE1_MARK_METAFILE:
+                return True
+
+        return False
+
+    def _parse_known_metalist(self, *, filepath):
+        reference_location = pathlib.Path(filepath).parent
+
+        files = []
+        weights = []
+        with open(filepath) as file:
+            line_iter = _WrappedIter(file)
+
+            linenum, first_line = line_iter.get_next()
+            assert first_line == _VALID_LINE1_MARK_METAFILE, "confirm this before getting here"
+
+            while True:
+                file_with_weight = self._next_non_comment(
+                    line_iter=line_iter,
+                    also_skip_blanks=True
+                )
+                if not file_with_weight:
+                    break
+                else:
+                    tokens = file_with_weight.split("|")
+                    f = tokens[0]
+                    w = float(tokens[1])
+                    files.append(os.path.join(reference_location, f))
+                    weights.append(w)
+
+        return files, weights
+
     def parse(self):
         s = set.Set()
 
-        for f in self._files:
+        files = self._files
+        weights = [1.0 for f in self._files]
+
+        if len(self._files) == 1 and self._file_is_metalist(filepath=self._files[0]):
+            files, weights = self._parse_known_metalist(
+                filepath=self._files[0])
+
+        for i, f in enumerate(files):
             set_from_file = self._parse_file(filepath=f)
-            set_from_file.drop_all_but(percent=1.0)
+            set_from_file.drop_all_but(percent=weights[i])
             s.union(set_from_file, fail_on_duplicate=True)
 
         logger.info(f'Total items: {len(s._items)}')

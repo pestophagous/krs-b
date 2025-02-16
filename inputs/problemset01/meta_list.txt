@@ -1,0 +1,12 @@
+krs_metalist_v1
+# ignore comment lines AND BLANK LINES
+
+# ^^ ignore the blank line above
+
+# filename(relative to "here": CWD of this metalist), then pipe, then percent
+# Note: at time of writing, if you have pipe AS PART OF FILENAME, this is untested.
+# Recommend: do not put "|" in the filename of any of your input files.
+
+sci_notation_01.txt|1.0
+sp25_week01.txt|0.6
+problem_set.txt|0.5
