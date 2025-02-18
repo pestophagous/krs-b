@@ -167,21 +167,75 @@ Solve for B
 \[ V = \frac{1}{3}Bh \]
 -----
 -----
+7eae56e
+$ 4c + 2 $
+algebra-expressions,fractions,parentheses,sp25_1.1
+---
+Clear parentheses and combine like terms
+\[ \frac{1}{2}(4 - 2c) + 5c \]
+-----
+-----
+2c7edf0
+$ 6y^2 $
+algebra-expressions,algebra-properties,fractions,parentheses,sp25_1.1
+---
+Clear parentheses and combine like terms
+\[ 2y^2 - [13 - \frac{2}{3}(6y^2 - 9)  - 10] +9 \]
+-----
+-----
+d9a741c
+intersection: \{-1,2,7\}, union: \{-8,-1,2,3,4,7,8,12\}
+union-vs-intersection,sets,sp25_1.4
+---
+\[ F = \{-8,-1,2,3,4,7,8\} \]
+\[ I = \{   -1,2,    7, 12\} \]
+Find:
+\[ F \cap I \]
+\[ F \cup I \]
+-----
+-----
+c6b37ba
+$ x = \frac{14}{9} $
+solve-for-x,fractions,canceling,sp25_1.2
+---
+Solve
+\[ \frac{5-x}{6} - \frac{2x-3}{2} = \frac{x}{3} \]
+-----
+-----
+9f6bf43
+$ \text{integers} = \{ -6, 8, 0 \}, \text{rational} = \{ -6, \frac{3}{5}, 8, 0.625, 0, 0.\bar{5}  \} $
+definitions,sets,number-sets,sp25_1.0
+---
+\[ \text{Given} \left\{ -6, \frac{3}{5}, 8, 0.625, 0, 4\pi, 0.\bar{5}, \sqrt{7} \right\} \]
+List the integers.
+
+List the rational numbers.
+-----
+-----
+8225e46
+$ x = \frac{1}{2} $
+fractions,exponents,order-of-operations,sp25_1.0
+---
+\[ \frac{2}{5} \div \left( - \frac{7}{10} \right) \left( - \frac{7}{6} \right) - \frac{1}{6}  \]
+-----
+-----
+ed1fe08
+$ -7 $
+fractions,exponents,order-of-operations,sp25_1.0
+---
+\[ \frac{-6^2-10^2 \div 5}{-1 + 3^2} \]
+-----
+-----
+# 9e40b14
+# $
+# ,
+# ---
+# \[
+# -----
+# -----
 
 
 
-#7eae56e
-#9f6bf43
-#c6b37ba
-#d9a741c
-#2c7edf0
-#ed1fe08
-#d9b165b
-#0fb442a
-#9867384
-#ea3acac
-#9e40b14
-#8225e46
 #72361ec
 #8669450
 #60afffc

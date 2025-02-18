@@ -1,0 +1,38 @@
+krs_v1
+# then problem uniq-id (unique across problem set)
+# then answer
+# then comma-separated tags. tag names can have anything (within reason?) except comma
+# ---
+# the rest (until delimiter) will be inserted into the LaTeX worksheet
+d9b165b
+$ \frac{n^2}{4} $
+fractions,exponents,negative-exponents,sp25_2.1
+---
+Simplify. Answer must not have negative exponents.
+\[ \frac{1}{4n^{-2}} \]
+-----
+-----
+0fb442a
+$ \frac{6}{p^5} $
+fractions,exponents,negative-exponents,sp25_2.1
+---
+Simplify. Answer must not have negative exponents.
+\[ 6p^{-5} \]
+-----
+-----
+9867384
+$ \frac{81b^4}{a^{16}} $
+fractions,exponents,negative-exponents,canceling,sp25_2.1
+---
+Simplify. Answer must not have negative exponents.
+\[ \left( \frac{-3b}{a^4} \right)^4 \]
+-----
+-----
+ea3acac
+$ \frac{5x^2z^8}{y^6} $
+fractions,exponents,negative-exponents,canceling,sp25_2.1
+---
+Simplify. Answer must not have negative exponents.
+\[ \frac{20x^4y^{-6}z^5}{4x^2z^{-3}} \]
+-----
+-----
