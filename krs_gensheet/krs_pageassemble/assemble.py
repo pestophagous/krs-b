@@ -43,6 +43,10 @@ class Assemblor:
         template = os.path.normpath(os.path.join(
             os.path.dirname(__file__), 'simple_tex', 'subpage_of_worksheet.tex'))
         contents = Path(template).read_text()
+        images_folder = os.path.normpath(os.path.join(
+            os.path.dirname(__file__), '..', '..', 'inputs', 'images'))
+        contents = contents.replace(
+            'KRSREPLACEMEIMAGESFOLDERPATH', images_folder)
 
         for i, prompt in enumerate(worksheet.prompts):
             # TODO: when printing sheet, must put date with uniq-id
@@ -83,6 +87,10 @@ class Assemblor:
         template = os.path.normpath(os.path.join(
             os.path.dirname(__file__), 'simple_tex', 'page_of_answerkey.tex'))
         contents = Path(template).read_text()
+        images_folder = os.path.normpath(os.path.join(
+            os.path.dirname(__file__), '..', '..', 'inputs', 'images'))
+        contents = contents.replace(
+            'KRSREPLACEMEIMAGESFOLDERPATH', images_folder)
 
         keyed_answers = ''
         for i, answer in enumerate(answerkey.answers):
