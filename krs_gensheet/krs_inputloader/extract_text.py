@@ -26,11 +26,13 @@ class _WrappedIter:
 
 
 class ExtractText:
-    def __init__(self, files):
+    def __init__(self, *, files, include_tags=None, exclude_tags=None):
         for f in files:
             assert os.path.isfile(f)
 
         self._files = files
+        self._include_tags = include_tags
+        self._exclude_tags = exclude_tags
 
     def _next_non_comment(self, *, line_iter, also_skip_blanks=False):
         while True:
@@ -93,7 +95,8 @@ class ExtractText:
         return None
 
     def _parse_file(self, *, filepath):
-        s = set.Set()
+        s = set.Set(include_tags=self._include_tags,
+                    exclude_tags=self._exclude_tags)
 
         with open(filepath) as file:
             line_iter = _WrappedIter(file)
@@ -178,7 +181,8 @@ class ExtractText:
         return files, weights
 
     def parse(self):
-        s = set.Set()
+        s = set.Set(include_tags=self._include_tags,
+                    exclude_tags=self._exclude_tags)
 
         files = self._files
         weights = [1.0 for f in self._files]

@@ -1,14 +1,37 @@
 #!/usr/bin/env python3
 
+import argparse
 import logging
-import os
-import sys
 
 from krs_inputloader import extract_text
 from krs_pageassemble import assemble
 from krs_select import select
 
 logger = None  # This is initialized in __main__
+
+
+parser = argparse.ArgumentParser(
+    prog='krs',
+    description='Generator of pdf worksheets, supporting LaTeX math expressions.')
+
+parser.add_argument(
+    '-t',
+    '--include-tags',
+    action='extend',
+    metavar='some_tag',
+    nargs='+',
+    help='Tags of desired problems. Problems with these tags are kept. All else is dropped.')
+parser.add_argument(
+    '-v',
+    '--exclude-tags',
+    action='extend',
+    metavar='some_tag',
+    nargs='+',
+    help='Problems with these tags will be filtered out. It happens after --include-tags are applied.')
+parser.add_argument(
+    'inputfile',
+    nargs='+',
+    help='Either exactly one "metafile", or 1+ problemset files')
 
 
 def main():
@@ -21,14 +44,13 @@ def main():
 
     logger = logging.getLogger('krs_studying.' + __name__)
 
-    inputfiles = []
-    inputfiles.append(os.path.normpath(os.path.join(os.getcwd(), sys.argv[1])))
-    if len(sys.argv) > 2:
-        for i in range(2, len(sys.argv)):
-            inputfiles.append(os.path.normpath(
-                os.path.join(os.getcwd(), sys.argv[i])))
+    args = parser.parse_args()
 
-    extractor = extract_text.ExtractText(inputfiles)
+    extractor = extract_text.ExtractText(
+        files=args.inputfile,
+        include_tags=args.include_tags,
+        exclude_tags=args.exclude_tags
+    )
     inputset = extractor.parse()
     selector = select.Selector(inputset=inputset)
     assemblor = assemble.Assemblor(

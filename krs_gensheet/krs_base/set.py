@@ -18,11 +18,17 @@ class Item:
     tags: list = field(init=True)
     prompt: str = field(init=True)
 
+    def is_tagged_with_any_of(self, list_of_tags):
+        intersection = set(self.tags).intersection(set(list_of_tags))
+        return bool(intersection)
+
 
 class Set:
-    def __init__(self):
+    def __init__(self, *, include_tags=None, exclude_tags=None):
         self._items = []
         self._item_ids = {}
+        self._include_tags = include_tags
+        self._exclude_tags = exclude_tags
 
     def get_all_items(self):
         return copy.deepcopy(self._items)
@@ -31,8 +37,19 @@ class Set:
         if item.unique_id in self._item_ids:
             raise ValueError(f"Duplicate id not allowed: {item.unique_id}")
 
-        self._item_ids[item.unique_id] = 1
-        self._items.append(item)
+        keep_it = True
+        if self._include_tags:
+            keep_it = item.is_tagged_with_any_of(self._include_tags)
+
+        if keep_it and self._exclude_tags:
+            keep_it = not item.is_tagged_with_any_of(self._exclude_tags)
+
+        logger.debug(
+            f'keep_it={keep_it} for {item.unique_id} with tags: {item.tags}')
+
+        if keep_it:
+            self._item_ids[item.unique_id] = 1
+            self._items.append(item)
 
     def union(self, other_set, *, fail_on_duplicate=True):
         for item in other_set._items:
