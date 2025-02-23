@@ -197,4 +197,5 @@ class ExtractText:
             s.union(set_from_file, fail_on_duplicate=True)
 
         logger.info(f'Total items: {len(s._items)}')
+        s.log_all_tags()
         return s

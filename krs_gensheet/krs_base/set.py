@@ -29,9 +29,13 @@ class Set:
         self._item_ids = {}
         self._include_tags = include_tags
         self._exclude_tags = exclude_tags
+        self._set_of_all_tags = set()
 
     def get_all_items(self):
         return copy.deepcopy(self._items)
+
+    def log_all_tags(self):
+        logger.info(f'All tags in set: {self._set_of_all_tags}')
 
     def append(self, item):
         if item.unique_id in self._item_ids:
@@ -50,6 +54,7 @@ class Set:
         if keep_it:
             self._item_ids[item.unique_id] = 1
             self._items.append(item)
+            self._set_of_all_tags.update(set(item.tags))
 
     def union(self, other_set, *, fail_on_duplicate=True):
         for item in other_set._items:
