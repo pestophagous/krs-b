@@ -27,6 +27,12 @@ class Assemblor:
             assert page.page_is_sane(a)
             assert a.items_on_page == _ITEMS_PER_AK_PAGE
 
+        # FUTURE: consider CLI arg(s) for more image paths
+        self.images_folder1 = os.path.normpath(os.path.join(
+            os.path.dirname(__file__), '..', '..', 'inputs', 'images'))
+        self.images_folder2 = os.path.normpath(os.path.join(
+            os.path.dirname(__file__), '..', '..', 'private', 'inputs', 'images'))
+
     def run(self):
         i = 0
         for w in self._worksheets:
@@ -38,15 +44,19 @@ class Assemblor:
             i += 1
             self.print_one_answerkey(a, page=i)
 
+    def _with_image_paths_interpolated(self, contents):
+        contents = contents.replace(
+            'KRSREPLACEMEIMAGESFOLDERPATH', self.images_folder1)
+        contents = contents.replace(
+            'KRSREPLACEMESECONDIMAGESFOLDERPATH', self.images_folder2)
+        return contents
+
     def print_one_worksheet(self, worksheet, *, page):
         logger.info('print_one_worksheet')
         template = os.path.normpath(os.path.join(
             os.path.dirname(__file__), 'simple_tex', 'subpage_of_worksheet.tex'))
         contents = Path(template).read_text()
-        images_folder = os.path.normpath(os.path.join(
-            os.path.dirname(__file__), '..', '..', 'inputs', 'images'))
-        contents = contents.replace(
-            'KRSREPLACEMEIMAGESFOLDERPATH', images_folder)
+        contents = self._with_image_paths_interpolated(contents)
 
         for i, prompt in enumerate(worksheet.prompts):
             # TODO: when printing sheet, must put date with uniq-id
@@ -87,10 +97,7 @@ class Assemblor:
         template = os.path.normpath(os.path.join(
             os.path.dirname(__file__), 'simple_tex', 'page_of_answerkey.tex'))
         contents = Path(template).read_text()
-        images_folder = os.path.normpath(os.path.join(
-            os.path.dirname(__file__), '..', '..', 'inputs', 'images'))
-        contents = contents.replace(
-            'KRSREPLACEMEIMAGESFOLDERPATH', images_folder)
+        contents = self._with_image_paths_interpolated(contents)
 
         keyed_answers = ''
         for i, answer in enumerate(answerkey.answers):
