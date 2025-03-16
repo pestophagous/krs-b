@@ -101,8 +101,8 @@ class Assemblor:
 
         keyed_answers = ''
         for i, answer in enumerate(answerkey.answers):
-            keyed_answers += answerkey.unique_ids[i]
-            keyed_answers += '. '
+            keyed_answers += '\\texttt{' + answerkey.unique_ids[i]
+            keyed_answers += '.    }'
             keyed_answers += answer
             keyed_answers += '\n\n'
 
