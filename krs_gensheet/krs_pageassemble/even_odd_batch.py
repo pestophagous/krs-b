@@ -32,11 +32,12 @@ _NEXT = """
 
 
 class EvenOddBatch:
-    def __init__(self, *, original_cwd, scratch_dir):
+    def __init__(self, *, original_cwd, scratch_dir, content_name):
         self._tex_for_all_odd_pages = ''
         self._tex_for_all_even_pages = ''
         self._next_is_odd = True
 
+        self._content_name = content_name
         self._original_cwd = original_cwd
         self._scratch_dir = scratch_dir
 
@@ -67,10 +68,10 @@ class EvenOddBatch:
         os.chdir(self._scratch_dir)
         self._close_and_print_half(
             tex_string_in_progress=self._tex_for_all_odd_pages,
-            new_pdf_basename='pages_odd')
+            new_pdf_basename=f'{self._content_name}_odd')
         self._close_and_print_half(
             tex_string_in_progress=self._tex_for_all_even_pages,
-            new_pdf_basename='pages_even')
+            new_pdf_basename=f'{self._content_name}_even')
 
     def _close_and_print_half(self, *, tex_string_in_progress, new_pdf_basename):
         if not tex_string_in_progress:

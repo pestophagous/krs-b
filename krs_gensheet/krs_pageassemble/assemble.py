@@ -23,6 +23,7 @@ class Assemblor:
 
         self._original_cwd = os.getcwd()
         self._even_odd_batch = None
+        self._even_odd_answers = None
 
         for w in self._worksheets:
             assert page.page_is_sane(w)
@@ -41,7 +42,13 @@ class Assemblor:
     def run(self):
         os.chdir(_SCRATCHPAD_DIR)
         self._even_odd_batch = even_odd_batch.EvenOddBatch(
-            original_cwd=self._original_cwd, scratch_dir=_SCRATCHPAD_DIR)
+            original_cwd=self._original_cwd,
+            scratch_dir=_SCRATCHPAD_DIR,
+            content_name='pages')
+        self._even_odd_answers = even_odd_batch.EvenOddBatch(
+            original_cwd=self._original_cwd,
+            scratch_dir=_SCRATCHPAD_DIR,
+            content_name='answers')
 
         i = 0
         for w in self._worksheets:
@@ -54,6 +61,7 @@ class Assemblor:
             self.print_one_answerkey(a, page=i)
 
         self._even_odd_batch.print()
+        self._even_odd_answers.print()
         os.chdir(self._original_cwd)
 
     def _with_image_paths_interpolated(self, contents):
@@ -139,8 +147,10 @@ class Assemblor:
 
         timesuffix = datetime.datetime.now().isoformat().replace(':', '_')
         outname = f'answers_{timesuffix}'
+        scratchfile = os.path.join(_SCRATCHPAD_DIR, f"{outname}.pdf")
         subprocess.run(
             ["pdflatex", f"-jobname={outname}", "tmpanswerkey.tex"])
         shutil.copy2(
-            os.path.join(_SCRATCHPAD_DIR, f"{outname}.pdf"),
+            scratchfile,
             os.path.join(self._original_cwd, f"{outname}.pdf"))
+        self._even_odd_answers.add_page(path_to_page_pdf=scratchfile)
