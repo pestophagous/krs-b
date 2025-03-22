@@ -1,6 +1,7 @@
 import datetime
 import logging
 import os
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -9,6 +10,7 @@ from krs_pageassemble import page
 # FUTURE: different possibilities for items-per-page.
 _ITEMS_PER_WS_PAGE = 3
 _ITEMS_PER_AK_PAGE = 24
+_SCRATCHPAD_DIR = "/tmp"
 
 logger = logging.getLogger('krs_studying.' + __name__)
 
@@ -18,6 +20,8 @@ class Assemblor:
         # FUTURE: different possibilities for items-per-page.
         self._worksheets = worksheets
         self._answerkeys = answerkeys
+
+        self._original_cwd = os.getcwd()
 
         for w in self._worksheets:
             assert page.page_is_sane(w)
@@ -34,6 +38,7 @@ class Assemblor:
             os.path.dirname(__file__), '..', '..', 'private', 'inputs', 'images'))
 
     def run(self):
+        os.chdir(_SCRATCHPAD_DIR)
         i = 0
         for w in self._worksheets:
             i += 1
@@ -43,6 +48,8 @@ class Assemblor:
         for a in self._answerkeys:
             i += 1
             self.print_one_answerkey(a, page=i)
+
+        os.chdir(self._original_cwd)
 
     def _with_image_paths_interpolated(self, contents):
         contents = contents.replace(
@@ -65,12 +72,16 @@ class Assemblor:
             tex_content = tex_content.replace(
                 'KRSREPLACEMEID', worksheet.unique_ids[i])
 
-            with open(f"tmp{i+1}.tex", "w") as text_file:
+            single_prompt_inputfile = os.path.join(
+                _SCRATCHPAD_DIR, f"tmp{i+1}.tex")
+            with open(single_prompt_inputfile, "w") as text_file:
                 text_file.write(tex_content)
 
             subprocess.run(
-                ["pdflatex", "-output-directory", "/tmp", f"tmp{i+1}.tex"])
+                ["pdflatex", "-output-directory", _SCRATCHPAD_DIR, single_prompt_inputfile])
 
+        # We enter the next loop if the page needs "leftover placeholders".
+        # This happens if worksheet.prompts contained FEWER than _ITEMS_PER_WS_PAGE.
         while i < (_ITEMS_PER_WS_PAGE-1):
             i += 1
             # Nice-to-have: why did empty string fail where single period works?
@@ -79,17 +90,25 @@ class Assemblor:
             tex_content = tex_content.replace(
                 'KRSREPLACEMEPROMPT', '')
 
-            with open(f"tmp{i+1}.tex", "w") as text_file:
+            single_prompt_inputfile = os.path.join(
+                _SCRATCHPAD_DIR, f"tmp{i+1}.tex")
+            with open(single_prompt_inputfile, "w") as text_file:
                 text_file.write(tex_content)
 
             subprocess.run(
-                ["pdflatex", "-output-directory", "/tmp", f"tmp{i+1}.tex"])
+                ["pdflatex", "-output-directory", _SCRATCHPAD_DIR, single_prompt_inputfile])
 
         template = os.path.normpath(os.path.join(
             os.path.dirname(__file__), 'simple_tex', 'one_whole_worksheet_page.tex'))
 
+        ws_basename = f"worksheet{worksheet.unique_ids[0]}"
+        ws_path_in_scratchdir = os.path.join(
+            _SCRATCHPAD_DIR, f"{ws_basename}.pdf")
         subprocess.run(
-            ["pdflatex", f"-jobname=worksheet{worksheet.unique_ids[0]}", template])
+            ["pdflatex", f"-jobname={ws_basename}", template])
+        shutil.copy2(
+            ws_path_in_scratchdir,
+            os.path.join(self._original_cwd, f"{ws_basename}.pdf"))
 
     def print_one_answerkey(self, answerkey, *, page):
         logger.info('print_one_answerkey')
@@ -116,3 +135,6 @@ class Assemblor:
         outname = f'answers_{timesuffix}'
         subprocess.run(
             ["pdflatex", f"-jobname={outname}", "tmpanswerkey.tex"])
+        shutil.copy2(
+            os.path.join(_SCRATCHPAD_DIR, f"{outname}.pdf"),
+            os.path.join(self._original_cwd, f"{outname}.pdf"))
