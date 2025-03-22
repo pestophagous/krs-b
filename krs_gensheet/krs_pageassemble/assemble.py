@@ -101,7 +101,7 @@ class Assemblor:
         template = os.path.normpath(os.path.join(
             os.path.dirname(__file__), 'simple_tex', 'one_whole_worksheet_page.tex'))
 
-        ws_basename = f"worksheet{worksheet.unique_ids[0]}"
+        ws_basename = f"worksheet_{page:0>4}"
         ws_path_in_scratchdir = os.path.join(
             _SCRATCHPAD_DIR, f"{ws_basename}.pdf")
         subprocess.run(
