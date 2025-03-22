@@ -5,7 +5,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from krs_pageassemble import page
+from krs_pageassemble import even_odd_batch, page
 
 # FUTURE: different possibilities for items-per-page.
 _ITEMS_PER_WS_PAGE = 3
@@ -22,6 +22,7 @@ class Assemblor:
         self._answerkeys = answerkeys
 
         self._original_cwd = os.getcwd()
+        self._even_odd_batch = None
 
         for w in self._worksheets:
             assert page.page_is_sane(w)
@@ -39,6 +40,9 @@ class Assemblor:
 
     def run(self):
         os.chdir(_SCRATCHPAD_DIR)
+        self._even_odd_batch = even_odd_batch.EvenOddBatch(
+            original_cwd=self._original_cwd, scratch_dir=_SCRATCHPAD_DIR)
+
         i = 0
         for w in self._worksheets:
             i += 1
@@ -49,6 +53,7 @@ class Assemblor:
             i += 1
             self.print_one_answerkey(a, page=i)
 
+        self._even_odd_batch.print()
         os.chdir(self._original_cwd)
 
     def _with_image_paths_interpolated(self, contents):
@@ -109,6 +114,7 @@ class Assemblor:
         shutil.copy2(
             ws_path_in_scratchdir,
             os.path.join(self._original_cwd, f"{ws_basename}.pdf"))
+        self._even_odd_batch.add_page(path_to_page_pdf=ws_path_in_scratchdir)
 
     def print_one_answerkey(self, answerkey, *, page):
         logger.info('print_one_answerkey')
