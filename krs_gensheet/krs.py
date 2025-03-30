@@ -3,6 +3,7 @@
 import argparse
 import logging
 
+from krs_base import app_context
 from krs_inputloader import extract_text
 from krs_pageassemble import assemble
 from krs_select import select
@@ -29,6 +30,11 @@ parser.add_argument(
     nargs='+',
     help='Problems with these tags will be filtered out. It happens after --include-tags are applied.')
 parser.add_argument(
+    '-r',
+    '--report-mode',
+    action='store_true',
+    help='Skip pdf generation. Output a "report" of tags and problems to STDOUT')
+parser.add_argument(
     'inputfile',
     nargs='+',
     help='Either exactly one "metafile", or 1+ problemset files')
@@ -46,17 +52,19 @@ def main():
 
     args = parser.parse_args()
 
-    extractor = extract_text.ExtractText(
-        files=args.inputfile,
-        include_tags=args.include_tags,
-        exclude_tags=args.exclude_tags
-    )
+    the_app_context = app_context.AppContext(args=args)
+
+    extractor = extract_text.ExtractText(context=the_app_context)
     inputset = extractor.parse()
-    selector = select.Selector(inputset=inputset)
-    assemblor = assemble.Assemblor(
-        worksheets=selector.get_worksheets(),
-        answerkeys=selector.get_answerkeys())
-    assemblor.run()
+
+    if args.report_mode:
+        logger.info('Skipping page assembly due to report_mode argument.')
+    else:
+        selector = select.Selector(inputset=inputset)
+        assemblor = assemble.Assemblor(
+            worksheets=selector.get_worksheets(),
+            answerkeys=selector.get_answerkeys())
+        assemblor.run()
 
     logger.info('Done')
 

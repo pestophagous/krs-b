@@ -1,6 +1,7 @@
 import copy
 import logging
 import math
+import pprint
 import random
 from dataclasses import dataclass, field
 
@@ -9,6 +10,13 @@ from dataclasses import dataclass, field
 # (eq=True, frozen=True) gives us hashability
 
 logger = logging.getLogger('krs_studying.' + __name__)
+
+
+def one_line_ify(s):
+    s = s.replace('\r\n', ' ')
+    s = s.replace('\r', ' ')
+    s = s.replace('\n', ' ')
+    return s
 
 
 @dataclass
@@ -22,20 +30,32 @@ class Item:
         intersection = set(self.tags).intersection(set(list_of_tags))
         return bool(intersection)
 
+    def reported_prompt(self):
+        return [self.unique_id, one_line_ify(self.prompt)]
+
 
 class Set:
-    def __init__(self, *, include_tags=None, exclude_tags=None):
+    def __init__(self, *, context):
+        self._context = context
         self._items = []
         self._item_ids = {}
-        self._include_tags = include_tags
-        self._exclude_tags = exclude_tags
+        self._include_tags = context.args.include_tags
+        self._exclude_tags = context.args.exclude_tags
         self._set_of_all_tags = set()
 
     def get_all_items(self):
         return copy.deepcopy(self._items)
 
     def log_all_tags(self):
-        logger.info(f'All tags in set: {self._set_of_all_tags}')
+        as_a_list = sorted(list(self._set_of_all_tags))
+        logger.info(f'All tags in set: {as_a_list}')
+        if self._context.args.report_mode:
+            for t in as_a_list:
+                # intentional use of bare 'print' here:
+                print(t)
+
+            item_report = [i.reported_prompt() for i in self._items]
+            pprint.pprint(item_report, width=1)
 
     def append(self, item):
         if item.unique_id in self._item_ids:
@@ -76,6 +96,11 @@ class Set:
         elif pct > 1:
             pct = 1
 
+        if pct < 1 and self._context.args.report_mode:
+            logger.error('We strongly advise AGAINST simultaneous use of metalist weights '
+                         'and report_mode in the same run. Weight is ignored in this case.')
+            pct = 1
+
         num_to_drop = math.floor(item_count*(1-pct))
         assert item_count >= 2
         if num_to_drop == item_count:
@@ -84,6 +109,9 @@ class Set:
         logger.info(f'dropping {num_to_drop} of {item_count}')
         num_to_keep = item_count - num_to_drop
 
-        random.shuffle(self._items)
+        # Note: shuffling here might 'surprise' a user who invoked the --report-mode opt
+        if not self._context.args.report_mode:
+            random.shuffle(self._items)
+
         self._items = self._items[0:num_to_keep]
         logger.info(f'remaining {len(self._items)}')
