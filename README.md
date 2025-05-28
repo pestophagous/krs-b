@@ -1,4 +1,4 @@
-## Platform(s) Where KRS is Known To Work
+## Where KRS is Known To Work
 
 - Ubuntu 22.04 Jammy
    - with: Python 3.10.12
