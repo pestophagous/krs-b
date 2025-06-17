@@ -1,0 +1,21 @@
+# toml config program arguments for krs
+#
+# This file should be named EXACTLY: krscfg.toml
+#
+# and the file should be in your current working directory when you
+# invoke the krs.py tool.
+
+include_tags = [
+'exponents'
+]
+
+exclude_tags = [
+'canceling'
+]
+
+report_mode = true
+
+# inputfile is a LIST because you can specify many files
+inputfile = [
+'../inputs/problemset01/sp25_week03.txt'
+]

@@ -29,7 +29,7 @@ class ExtractText:
     def __init__(self, *, context):
         self._context = context
         for f in self._context.args.inputfile:
-            assert os.path.isfile(f)
+            assert os.path.isfile(f), f'os.path.isfile({f})'
 
         self._files = self._context.args.inputfile
         self._include_tags = context.args.include_tags
