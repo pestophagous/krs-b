@@ -33,6 +33,7 @@ def main():
     else:
         selector = select.Selector(inputset=inputset)
         assemblor = assemble.Assemblor(
+            context=the_app_context,
             worksheets=selector.get_worksheets(),
             answerkeys=selector.get_answerkeys())
         assemblor.run()

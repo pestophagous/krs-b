@@ -30,6 +30,11 @@ class AppOptions:
             '--report-mode',
             action='store_true',
             help='Skip pdf generation. Output a "report" of tags and problems to STDOUT')
+        parser.add_argument(
+            '-b',
+            '--background-on-sheets',
+            action='store_true',
+            help='Use background/wallpaper fill on every sheet')
         ifile_argname = 'inputfile'
         ifile_arg = parser.add_argument(
             ifile_argname,

@@ -1,3 +1,5 @@
+\providecommand{\pgfsyspdfmark}[3]{} % https://tex.stackexchange.com/a/319986/17482
+
 \documentclass{article}
 \usepackage{pdfpages}
 \usepackage[papersize={8.5in,11in},
@@ -8,6 +10,15 @@
 
 % \pagestyle{plain}                               % Don't use page numbers
 \pagenumbering{gobble}                            % Don't use page numbers
+
+\usepackage{eso-pic,adjustbox}
+\graphicspath{ {KRSREPLACEMEIMAGESFOLDERPATH}{KRSREPLACEMESECONDIMAGESFOLDERPATH} }
+
+%uncomment_for_bg%\AddToShipoutPictureBG{%
+%uncomment_for_bg%  \AtPageCenter{%
+%uncomment_for_bg%    \adjincludegraphics[width=\paperwidth,height=\paperheight,
+%uncomment_for_bg%      keepaspectratio,valign=M,center=0pt]{graphpaper.pdf}%
+%uncomment_for_bg%}}
 
 \begin{document}
       \setlength\voffset{+0.0in}                  % adj. vert. offset as needed

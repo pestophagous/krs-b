@@ -16,8 +16,9 @@ logger = logging.getLogger('krs_studying.' + __name__)
 
 
 class Assemblor:
-    def __init__(self, *, worksheets, answerkeys):
+    def __init__(self, *, context, worksheets, answerkeys):
         # FUTURE: different possibilities for items-per-page.
+        self._context = context
         self._worksheets = worksheets
         self._answerkeys = answerkeys
 
@@ -111,8 +112,7 @@ class Assemblor:
             subprocess.run(
                 ["pdflatex", "-output-directory", _SCRATCHPAD_DIR, single_prompt_inputfile])
 
-        template = os.path.normpath(os.path.join(
-            os.path.dirname(__file__), 'simple_tex', 'one_whole_worksheet_page.tex'))
+        template = self.template_for_whole_page()
 
         ws_basename = f"worksheet_{page:0>4}"
         ws_path_in_scratchdir = os.path.join(
@@ -123,6 +123,23 @@ class Assemblor:
             ws_path_in_scratchdir,
             os.path.join(self._original_cwd, f"{ws_basename}.pdf"))
         self._even_odd_batch.add_page(path_to_page_pdf=ws_path_in_scratchdir)
+
+    def template_for_whole_page(self):
+        name = 'one_whole_worksheet_page.tex'
+        template = os.path.normpath(os.path.join(
+            os.path.dirname(__file__), 'simple_tex', name))
+        contents = Path(template).read_text()
+        contents = self._with_image_paths_interpolated(contents)
+
+        if self._context.args.background_on_sheets:
+            contents = contents.replace(
+                '%uncomment_for_bg%', '')
+
+        template_iterpolated = os.path.join(
+            _SCRATCHPAD_DIR, name)
+        with open(template_iterpolated, "w") as text_file:
+            text_file.write(contents)
+        return template_iterpolated
 
     def print_one_answerkey(self, answerkey, *, page):
         logger.info('print_one_answerkey')
