@@ -7,13 +7,11 @@ logger = logging.getLogger('krs_studying.' + __name__)
 
 
 class Selector:
-    # FUTURE: Selector will filter by tag or other criteria.
     def __init__(self, *, inputset):
         # inputset has method: get_all_items
         self._inputset = inputset
 
     def get_worksheets(self):
-        # FUTURE: Selector will filter by tag or other criteria.
         sheets = []
 
         # We shuffle for worksheets. We >sort< for answer key. do we need copies?
