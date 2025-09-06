@@ -31,7 +31,7 @@ def main():
     if args.report_mode:
         logger.info('Skipping page assembly due to report_mode argument.')
     else:
-        selector = select.Selector(inputset=inputset)
+        selector = select.Selector(context=the_app_context, inputset=inputset)
         assemblor = assemble.Assemblor(
             context=the_app_context,
             worksheets=selector.get_worksheets(),

@@ -109,9 +109,20 @@ class Set:
         logger.info(f'dropping {num_to_drop} of {item_count}')
         num_to_keep = item_count - num_to_drop
 
-        # Note: shuffling here might 'surprise' a user who invoked the --report-mode opt
-        if not self._context.args.report_mode:
-            random.shuffle(self._items)
+        if num_to_keep == len(self._items):
+            pass  # nothing to do. keep all.
+        else:
+            # We need num_to_drop valid indices AT RANDOM.
+            # Note: previously we would perform a `shuffle` and drop the droppable
+            #   quantity off of the end, to achieve the drop-at-random goal.
+            #   However, we now wish to PRESERVE original order while dropping at random.
+            # `sample` grabs droppable indices without replacement, as we require:
+            to_drop = random.sample(
+                list(range(0, len(self._items))), num_to_drop)
 
-        self._items = self._items[0:num_to_keep]
+            for i in to_drop:
+                self._items[i] = None  # marked for deletion
+
+            self._items = [i for i in self._items if i is not None]
+
         logger.info(f'remaining {len(self._items)}')

@@ -7,15 +7,18 @@ logger = logging.getLogger('krs_studying.' + __name__)
 
 
 class Selector:
-    def __init__(self, *, inputset):
+    def __init__(self, *, context, inputset):
+        self._context = context
         # inputset has method: get_all_items
         self._inputset = inputset
 
     def get_worksheets(self):
         sheets = []
 
-        # We shuffle for worksheets. We >sort< for answer key. do we need copies?
-        random.shuffle(self._inputset._items)
+        if not self._context.args.keep_input_sequence:
+            # We shuffle for worksheets. We >sort< for answer key. do we need
+            # safe/preserved/original copies?
+            random.shuffle(self._inputset._items)
 
         ids_on_one_page = []
         prompts_on_one_page = []

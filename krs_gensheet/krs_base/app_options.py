@@ -35,6 +35,11 @@ class AppOptions:
             '--background-on-sheets',
             action='store_true',
             help='Use background/wallpaper fill on every sheet')
+        parser.add_argument(
+            '-k',
+            '--keep-input-sequence',
+            action='store_true',
+            help='Place problems on sheets in input order. i.e. "no shuffle"')
         ifile_argname = 'inputfile'
         ifile_arg = parser.add_argument(
             ifile_argname,
