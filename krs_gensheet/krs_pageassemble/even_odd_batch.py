@@ -1,7 +1,8 @@
 import logging
 import os
 import shutil
-import subprocess
+
+from krs_pageassemble import util
 
 logger = logging.getLogger('krs_studying.' + __name__)
 
@@ -85,13 +86,13 @@ class EvenOddBatch:
         with open(inputfile, "w") as text_file:
             text_file.write(tex_string_in_progress)
 
-        subprocess.run(
-            ["pdflatex", "-output-directory", self._scratch_dir, inputfile])
+        util.run_pdflatex_subprocess(
+            cmd_tokens_list=["-output-directory", self._scratch_dir, inputfile])
 
         shutil.copy2(
             os.path.join(self._scratch_dir, f"{new_pdf_basename}.pdf"),
             os.path.join(self._original_cwd, f"{new_pdf_basename}.pdf"))
 
     def print_one_worksheet(self, worksheet, *, page):
-        subprocess.run(
-            ["pdflatex", "-output-directory", self._scratch_dir, single_prompt_inputfile])
+        util.run_pdflatex_subprocess(
+            cmd_tokens_list=["-output-directory", self._scratch_dir, single_prompt_inputfile])

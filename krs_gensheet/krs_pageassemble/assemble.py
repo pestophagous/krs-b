@@ -2,10 +2,9 @@ import datetime
 import logging
 import os
 import shutil
-import subprocess
 from pathlib import Path
 
-from krs_pageassemble import even_odd_batch, page
+from krs_pageassemble import even_odd_batch, page, util
 
 # FUTURE: different possibilities for items-per-page.
 _ITEMS_PER_WS_PAGE = 3
@@ -91,8 +90,8 @@ class Assemblor:
             with open(single_prompt_inputfile, "w") as text_file:
                 text_file.write(tex_content)
 
-            subprocess.run(
-                ["pdflatex", "-output-directory", _SCRATCHPAD_DIR, single_prompt_inputfile])
+            util.run_pdflatex_subprocess(cmd_tokens_list=[
+                "-output-directory", _SCRATCHPAD_DIR, single_prompt_inputfile])
 
         # We enter the next loop if the page needs "leftover placeholders".
         # This happens if worksheet.prompts contained FEWER than _ITEMS_PER_WS_PAGE.
@@ -109,16 +108,16 @@ class Assemblor:
             with open(single_prompt_inputfile, "w") as text_file:
                 text_file.write(tex_content)
 
-            subprocess.run(
-                ["pdflatex", "-output-directory", _SCRATCHPAD_DIR, single_prompt_inputfile])
+            util.run_pdflatex_subprocess(cmd_tokens_list=[
+                "-output-directory", _SCRATCHPAD_DIR, single_prompt_inputfile])
 
         template = self.template_for_whole_page()
 
         ws_basename = f"worksheet_{page:0>4}"
         ws_path_in_scratchdir = os.path.join(
             _SCRATCHPAD_DIR, f"{ws_basename}.pdf")
-        subprocess.run(
-            ["pdflatex", f"-jobname={ws_basename}", template])
+        util.run_pdflatex_subprocess(
+            cmd_tokens_list=[f"-jobname={ws_basename}", template])
         shutil.copy2(
             ws_path_in_scratchdir,
             os.path.join(self._original_cwd, f"{ws_basename}.pdf"))
@@ -165,8 +164,8 @@ class Assemblor:
         timesuffix = datetime.datetime.now().isoformat().replace(':', '_')
         outname = f'answers_{timesuffix}'
         scratchfile = os.path.join(_SCRATCHPAD_DIR, f"{outname}.pdf")
-        subprocess.run(
-            ["pdflatex", f"-jobname={outname}", "tmpanswerkey.tex"])
+        util.run_pdflatex_subprocess(
+            cmd_tokens_list=[f"-jobname={outname}", "tmpanswerkey.tex"])
         shutil.copy2(
             scratchfile,
             os.path.join(self._original_cwd, f"{outname}.pdf"))
