@@ -9,13 +9,15 @@ from krs_pageassemble import even_odd_batch, page, util
 # FUTURE: different possibilities for items-per-page.
 _ITEMS_PER_WS_PAGE = 3
 _ITEMS_PER_AK_PAGE = 24
-_SCRATCHPAD_DIR = "/tmp"
+_SCRATCHPAD_DIR = "/tmp/tmpkrs"
 
 logger = logging.getLogger('krs_studying.' + __name__)
 
 
 class Assemblor:
     def __init__(self, *, context, worksheets, answerkeys):
+        Path(_SCRATCHPAD_DIR).mkdir(parents=True, exist_ok=True)
+
         # FUTURE: different possibilities for items-per-page.
         self._context = context
         self._worksheets = worksheets
