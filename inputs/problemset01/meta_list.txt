@@ -3,6 +3,9 @@ krs_metalist_v1
 
 # ^^ ignore the blank line above
 
+# In emacs editor, highlight this in conf-mode to color the comment lines:
+#   (add-to-list 'auto-mode-alist '("meta_list\\.txt" . conf-mode))
+
 # filename(relative to "here": CWD of this metalist), then pipe, then percent
 # Note: at time of writing, if you have pipe AS PART OF FILENAME, this is untested.
 # Recommend: do not put "|" in the filename of any of your input files.
