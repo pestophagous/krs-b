@@ -95,20 +95,20 @@ class Assemblor:
             util.run_pdflatex_subprocess(cmd_tokens_list=[
                 "-output-directory", _SCRATCHPAD_DIR, single_prompt_inputfile])
 
+        blank_template = os.path.normpath(os.path.join(
+            os.path.dirname(__file__), 'simple_tex', 'subpage_of_worksheet_BLANK.tex'))
+        contents_blank_subpage = Path(blank_template).read_text()
+
         # We enter the next loop if the page needs "leftover placeholders".
         # This happens if worksheet.prompts contained FEWER than _ITEMS_PER_WS_PAGE.
         while i < (_ITEMS_PER_WS_PAGE-1):
             i += 1
-            # Nice-to-have: why did empty string fail where single period works?
-            tex_content = contents.replace(
-                'KRSREPLACEMEID', '')
-            tex_content = tex_content.replace(
-                'KRSREPLACEMEPROMPT', '')
-
+            # FUTURE: we can imagine a world where even the 'blank' placeholders
+            #  might want to do template interpolation. For now it's just a blank pdf.
             single_prompt_inputfile = os.path.join(
                 _SCRATCHPAD_DIR, f"tmp{i+1}.tex")
             with open(single_prompt_inputfile, "w") as text_file:
-                text_file.write(tex_content)
+                text_file.write(contents_blank_subpage)
 
             util.run_pdflatex_subprocess(cmd_tokens_list=[
                 "-output-directory", _SCRATCHPAD_DIR, single_prompt_inputfile])
