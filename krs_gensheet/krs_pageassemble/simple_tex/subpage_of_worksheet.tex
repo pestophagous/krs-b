@@ -31,6 +31,9 @@
 % (so far) working well for putting a QR code in an absolute location as
 % part of every individual problem/subpage:
 \AddToShipoutPicture{%
+% The "origin" is in lower-left, which does make sense in a cartesian way,
+% despite the fact that "starting at the bottom" broke my brain initially, due to
+% me thinking of TEXT and how we type from the top of the doc to the bottom.
 % lower right, per https://tex.stackexchange.com/a/632509/17482
 % if the QR square is bigger than 2cm, it bleeds outside of page:
 \put(\paperwidth-1cm-5mm,2mm){\includegraphics[height=5mm]{qr_of_hello.png}}
