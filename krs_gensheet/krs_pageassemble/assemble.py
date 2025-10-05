@@ -41,6 +41,13 @@ class Assemblor:
         self.images_folder2 = os.path.normpath(os.path.join(
             os.path.dirname(__file__), '..', '..', 'private', 'inputs', 'images'))
 
+        # FUTURE: consider CLI arg(s) for more tex paths
+        # https://tex.stackexchange.com/questions/632291/add-search-path-on-compilation
+        #
+        # /some/path//:  <-- trailing '/' means recurse in subdirs. ':' means std path, too.
+        os.environ["TEXINPUTS"] = os.path.normpath(os.path.join(
+            os.path.dirname(__file__), '..', '..', 'inputs', 'tex')) + '/:'
+
     def run(self):
         os.chdir(_SCRATCHPAD_DIR)
         self._even_odd_batch = even_odd_batch.EvenOddBatch(
