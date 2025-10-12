@@ -4,7 +4,7 @@ krs_v1
 # ----- or more at start (twice) is item delimeter. top and bottom of each item
 # then problem uniq-id (unique across problem set)
 # then answer
-# then comma-separated tags. tag names can have anything (within reason?) except comma
+# then tag1,tag2,... tag names use most chars (within reason?) except quotes and: ',_~!'
 # then ---
 # the rest (until delimiter) will be inserted into the LaTeX worksheet
 ##### when printing sheet, would be nice to add datetime
