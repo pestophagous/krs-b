@@ -24,8 +24,10 @@
       \setlength\voffset{+0.0in}                  % adj. vert. offset as needed
       \setlength\hoffset{+0.0in}                  % adj. horiz. offset as needed
       \includepdfmerge[nup=1x3,
-                       noautoscale=true,          % set "false" if larger inputs
-                       frame=false,               % set "true" for frames
-                       templatesize={8.5in}{3.5in}] % adjust as needed
-                       {/tmp/tmpkrs/tmp1.pdf,/tmp/tmpkrs/tmp2.pdf,/tmp/tmpkrs/tmp3.pdf}  % modify for file names
+               noautoscale=true,   % set "false" if larger inputs
+               frame=false,        % set "true" for frames
+               offset=0in 0in,     % if template (below) is smaller than available space,
+                                   % apply an offset to avoid it from being centered in space
+               templatesize={8.5in}{3.5in}] % adjust as needed
+               {/tmp/tmpkrs/tmp1.pdf,/tmp/tmpkrs/tmp2.pdf,/tmp/tmpkrs/tmp3.pdf}  % modify for file names
 \end{document}
