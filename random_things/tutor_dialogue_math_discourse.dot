@@ -1,0 +1,118 @@
+digraph "source tree" {
+    fontsize="16";
+    fontname="Helvetica";
+ratio=0.5;
+
+root -> "6" -> "7" -> "8" -> after
+"6" [fontcolor=transparent, fixedsize=true, height=0.01, width=0.01]
+"7" [fontcolor=transparent, fixedsize=true, height=0.01, width=0.01]
+"8" [fontcolor=transparent, fixedsize=true, height=0.01, width=0.01]
+root -> before
+root -> anytime
+
+anytime -> "Talk through anything \nwe know so far."
+
+before -> zoom_out
+before -> "."
+"." -> zoom_in
+"." [fontcolor=transparent, fixedsize=true, height=0.01, width=0.01]
+
+zoom_out -> "Where can we \nfind help?"
+zoom_out -> "Can we re-word?"
+zoom_out -> "a" -> "Does it remind you \nof a similar problem?"
+zoom_out -> "b" -> "Can we predict \nor guess the answer?"
+zoom_out -> "Can we break \nit into steps?"
+"a" [fontcolor=transparent, fixedsize=true, height=0.01, width=0.01]
+"b" [fontcolor=transparent, fixedsize=true, height=0.01, width=0.01]
+
+subgraph "cluster_box_zoom_out" {
+        label="zoom out";
+        "Where can we \nfind help?"
+        "Can we re-word?"
+        "Does it remind you \nof a similar problem?"
+        "Can we predict \nor guess the answer?"
+        "Can we break \nit into steps?"
+        "a"
+        "b"
+}
+
+zoom_in -> "What's the relationship \nbetween __ and __?" 
+//"What's the relationship \nbetween __ and __?" 
+//[style=filled, fillcolor="#aaaaaa"]
+zoom_in -> "2" -> "List variables. \nList the constants."
+zoom_in -> "Can we draw \na diagram/picture/table?"
+zoom_in -> "3" -> "Should we set \ndefinitions or limits?"
+"2" [fontcolor=transparent, fixedsize=true, height=0.01, width=0.01]
+"3" [fontcolor=transparent, fixedsize=true, height=0.01, width=0.01]
+
+subgraph "cluster_box_zoom_in" {
+        label="zoom in";
+        "What's the relationship \nbetween __ and __?" 
+        "List variables. \nList the constants."
+        "Can we draw \na diagram/picture/table?"
+        "Should we set \ndefinitions or limits?"
+        "2"
+        "3"
+
+}
+
+
+after -> "d" -> "e" -> reflect
+after -> proofs
+after -> "4" -> teach_back
+after -> "5" -> word_problem
+after -> EOD
+"d" [fontcolor=transparent, fixedsize=true, height=0.01, width=0.01]
+"e" [fontcolor=transparent, fixedsize=true, height=0.01, width=0.01]
+"4" [fontcolor=transparent, fixedsize=true, height=0.01, width=0.01]
+"5" [fontcolor=transparent, fixedsize=true, height=0.01, width=0.01]
+
+EOD -> "What things \nare up next?"
+
+proofs -> "Convince me \nthis works."
+proofs -> "How can we \ncheck the answer?"
+
+teach_back -> "If someone needed a hint, \nwhat do you say?"
+teach_back -> "h" -> "I missed this class. \nExplain what I missed."
+"h" [fontcolor=transparent, fixedsize=true, height=0.01, width=0.01]
+
+subgraph "cluster_box_teach_back" {
+        label="teach back";
+        "If someone needed a hint, \nwhat do you say?"
+        "I missed this class. \nExplain what I missed."
+        "h"
+}
+
+word_problem -> "Which words were \nmost important?"
+word_problem -> "Did you use concepts \nthat aren't just math concepts?"
+word_problem -> "c" -> "Is the solution a fit \nfor this situation?"
+"c" [fontcolor=transparent, fixedsize=true, height=0.01, width=0.01]
+
+subgraph "cluster_box_word_prob" {
+        label="word problem";
+        "Which words were \nmost important?"
+        "Did you use concepts \nthat aren't just math concepts?"
+        "Is the solution a fit \nfor this situation?"
+        "c"
+        
+}
+
+reflect -> "What strategy \ndid you use?"
+reflect -> "Does this \nalways work?"
+reflect -> "f" -> "Could we solve this \nusing other methods?"
+reflect -> "g" -> "What does this mean? \nIn a real-life situation?"
+reflect -> "(tweak) What happens if..?"
+"f" [fontcolor=transparent, fixedsize=true, height=0.01, width=0.01]
+"g" [fontcolor=transparent, fixedsize=true, height=0.01, width=0.01]
+
+subgraph "cluster_box_reflect" {
+        label="reflect";
+        "What strategy \ndid you use?"
+        "Does this \nalways work?"
+        "Could we solve this \nusing other methods?"
+        "What does this mean? \nIn a real-life situation?"
+        "(tweak) What happens if..?"
+        "f"
+        "g"
+}
+}
