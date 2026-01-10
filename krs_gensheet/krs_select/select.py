@@ -52,8 +52,15 @@ class Selector:
 
         # FUTURE: need option of which uniq-id to start with.
         # We shuffle for worksheets. We >sort< for answer key. do we need copies?
-        sorted_items = sorted(self._inputset._items,
-                              key=lambda x: x.unique_id)
+        sorted_items = sorted(
+            self._inputset._items,
+            # why a 2-tuple of lowercase id paired with original "raw" id?
+            # answer: lowercase solves 99% of issues, because we simply want (e.g.)
+            #  "a" and "A" to appear together, instead of having all upper-case
+            #  lettered id items before all lower-case ones. However, the id is
+            #  case-sensitive in terms of uniquifying the problems, so in case two ids
+            #  differ only in case, we then sort secondarily on original id:
+            key=lambda x: (x.unique_id.lower(), x.unique_id))
 
         ids_on_one_page = []
         answers_on_one_page = []
