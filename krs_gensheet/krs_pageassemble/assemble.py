@@ -37,6 +37,8 @@ class Assemblor:
             os.path.dirname(__file__), '..', '..', 'inputs', 'images'))
         self.images_folder2 = os.path.normpath(os.path.join(
             os.path.dirname(__file__), '..', '..', 'private', 'inputs', 'images'))
+        self.images_folder3 = os.path.normpath(os.path.join(
+            os.path.dirname(__file__), '..', '..', 'private', 'inputs', 'images', 'calculus1'))
 
         # FUTURE: consider CLI arg(s) for more tex paths
         # https://tex.stackexchange.com/questions/632291/add-search-path-on-compilation
@@ -71,6 +73,8 @@ class Assemblor:
         os.chdir(self._original_cwd)
 
     def _with_image_paths_interpolated(self, contents):
+        contents = contents.replace(
+            'KRSREPLACEMEIMAGESFOLDERPATH3', self.images_folder3)
         contents = contents.replace(
             'KRSREPLACEMEIMAGESFOLDERPATH', self.images_folder1)
         contents = contents.replace(
