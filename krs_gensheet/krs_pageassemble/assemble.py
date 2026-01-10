@@ -6,9 +6,6 @@ from pathlib import Path
 
 from krs_pageassemble import even_odd_batch, page, util
 
-# FUTURE: different possibilities for items-per-page.
-_ITEMS_PER_WS_PAGE = 3
-_ITEMS_PER_AK_PAGE = 24
 _SCRATCHPAD_DIR = "/tmp/tmpkrs"
 
 logger = logging.getLogger('krs_studying.' + __name__)
@@ -29,11 +26,11 @@ class Assemblor:
 
         for w in self._worksheets:
             assert page.page_is_sane(w)
-            assert w.items_on_page == _ITEMS_PER_WS_PAGE
+            assert w.items_on_page == page._ITEMS_PER_WS_PAGE
 
         for a in self._answerkeys:
             assert page.page_is_sane(a)
-            assert a.items_on_page == _ITEMS_PER_AK_PAGE
+            assert a.items_on_page == page._ITEMS_PER_AK_PAGE
 
         # FUTURE: consider CLI arg(s) for more image paths
         self.images_folder1 = os.path.normpath(os.path.join(
@@ -62,12 +59,12 @@ class Assemblor:
         i = 0
         for w in self._worksheets:
             i += 1
-            self.print_one_worksheet(w, page=i)
+            self.print_one_worksheet(w, pagenum=i)
 
         i = 0
         for a in self._answerkeys:
             i += 1
-            self.print_one_answerkey(a, page=i)
+            self.print_one_answerkey(a, pagenum=i)
 
         self._even_odd_batch.print()
         self._even_odd_answers.print()
@@ -80,7 +77,7 @@ class Assemblor:
             'KRSREPLACEMESECONDIMAGESFOLDERPATH', self.images_folder2)
         return contents
 
-    def print_one_worksheet(self, worksheet, *, page):
+    def print_one_worksheet(self, worksheet, *, pagenum):
         logger.info('print_one_worksheet')
         template = os.path.normpath(os.path.join(
             os.path.dirname(__file__), 'simple_tex', 'subpage_of_worksheet.tex'))
@@ -108,7 +105,7 @@ class Assemblor:
 
         # We enter the next loop if the page needs "leftover placeholders".
         # This happens if worksheet.prompts contained FEWER than _ITEMS_PER_WS_PAGE.
-        while i < (_ITEMS_PER_WS_PAGE-1):
+        while i < (page._ITEMS_PER_WS_PAGE-1):
             i += 1
             # FUTURE: we can imagine a world where even the 'blank' placeholders
             #  might want to do template interpolation. For now it's just a blank pdf.
@@ -122,7 +119,7 @@ class Assemblor:
 
         template = self.template_for_whole_page()
 
-        ws_basename = f"worksheet_{page:0>4}"
+        ws_basename = f"worksheet_{pagenum:0>4}"
         ws_path_in_scratchdir = os.path.join(
             _SCRATCHPAD_DIR, f"{ws_basename}.pdf")
         util.run_pdflatex_subprocess(
@@ -149,7 +146,7 @@ class Assemblor:
             text_file.write(contents)
         return template_iterpolated
 
-    def print_one_answerkey(self, answerkey, *, page):
+    def print_one_answerkey(self, answerkey, *, pagenum):
         logger.info('print_one_answerkey')
 
         template = os.path.normpath(os.path.join(

@@ -1,7 +1,7 @@
 import logging
 import random
 
-from krs_pageassemble import assemble, page
+from krs_pageassemble import page
 
 logger = logging.getLogger('krs_studying.' + __name__)
 
@@ -26,7 +26,7 @@ class Selector:
             ids_on_one_page.append(item.unique_id)
             prompts_on_one_page.append(item.prompt)
 
-            if len(ids_on_one_page) == assemble._ITEMS_PER_WS_PAGE:
+            if len(ids_on_one_page) == page._ITEMS_PER_WS_PAGE:
                 # make a WorksheetPage, add it to sheets list.
                 # reset 2 parallel lists.
                 p = page.WorksheetPage(
@@ -68,7 +68,7 @@ class Selector:
             ids_on_one_page.append(item.unique_id)
             answers_on_one_page.append(item.answer)
 
-            if len(ids_on_one_page) == assemble._ITEMS_PER_AK_PAGE:
+            if len(ids_on_one_page) == page._ITEMS_PER_AK_PAGE:
                 # make a AnswerKeyPage, add it to keypages list.
                 # reset 2 parallel lists.
                 p = page.AnswerKeyPage(
