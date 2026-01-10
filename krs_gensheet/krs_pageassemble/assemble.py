@@ -130,7 +130,7 @@ class Assemblor:
         self._even_odd_batch.add_page(path_to_page_pdf=ws_path_in_scratchdir)
 
     def template_for_whole_page(self):
-        name = 'one_whole_worksheet_page.tex'
+        name = 'one_whole_worksheet_page_v2.tex'
         template = os.path.normpath(os.path.join(
             os.path.dirname(__file__), 'simple_tex', name))
         contents = Path(template).read_text()
