@@ -33,7 +33,7 @@ _NEXT = """
 
 
 class EvenOddBatch:
-    def __init__(self, *, original_cwd, scratch_dir, content_name):
+    def __init__(self, *, original_cwd, scratch_dir, content_name, paperlength_str):
         self._tex_for_all_odd_pages = ''
         self._tex_for_all_even_pages = ''
         self._next_is_odd = True
@@ -42,11 +42,14 @@ class EvenOddBatch:
         self._original_cwd = original_cwd
         self._scratch_dir = scratch_dir
 
+        self._FIRST = _FIRST.replace("11in", paperlength_str)
+        self._NEXT = _NEXT.replace("11in", paperlength_str)
+
     def _add(self, *, page_set, path_to_page_pdf):
         if not page_set:
-            page_set += _FIRST
+            page_set += self._FIRST
         else:
-            page_set += _NEXT
+            page_set += self._NEXT
 
         page_set += "{"
         page_set += path_to_page_pdf

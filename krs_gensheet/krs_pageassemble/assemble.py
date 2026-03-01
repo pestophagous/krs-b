@@ -52,11 +52,13 @@ class Assemblor:
         self._even_odd_batch = even_odd_batch.EvenOddBatch(
             original_cwd=self._original_cwd,
             scratch_dir=_SCRATCHPAD_DIR,
-            content_name='pages')
+            content_name='pages',
+            paperlength_str='11in')
         self._even_odd_answers = even_odd_batch.EvenOddBatch(
             original_cwd=self._original_cwd,
             scratch_dir=_SCRATCHPAD_DIR,
-            content_name='answers')
+            content_name='answers',
+            paperlength_str='14in')
 
         i = 0
         for w in self._worksheets:
