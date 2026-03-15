@@ -1,0 +1,59 @@
+\providecommand{\pgfsyspdfmark}[3]{} % https://tex.stackexchange.com/a/319986/17482
+% \documentclass{article}
+\documentclass[fleqn]{report}
+
+\usepackage[papersize={8.5in,1.5in},
+  lmargin=0.6in,
+  rmargin=0.6in,
+  tmargin=0.2in,
+  bmargin=0in]{geometry}
+
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{relsize}
+\usepackage{wrapfig}
+\usepackage{bm}
+\usepackage{lmodern} % for fontsize. https://tex.stackexchange.com/q/322256/17482
+\usepackage{graphicx}
+\usepackage[export]{adjustbox} % https://tex.stackexchange.com/questions/260687/vertical-alignment-of-text-between-images#comment624769_260687
+\graphicspath{ {KRSREPLACEMEIMAGESFOLDERPATH}{KRSREPLACEMESECONDIMAGESFOLDERPATH}{KRSREPLACEMEIMAGESFOLDERPATH3} }
+\usepackage{eso-pic}
+\usepackage{setspace}
+
+\linespread{1.1}
+
+\usepackage[fontsize=14pt]{scrextend}
+
+\setlength{\mathindent}{0pt}
+
+\pagenumbering{gobble}
+
+% This file will be found via env var TEXINPUTS (see assemble.py)
+\input longdiv.tex
+
+% Using {eso-pic} (see above), this is a "watermark" approach that is
+% (so far) working well for putting a QR code in an absolute location as
+% part of every individual problem/subpage:
+\AddToShipoutPicture{%
+% The "origin" is in lower-left, which does make sense in a cartesian way,
+% despite the fact that "starting at the bottom" broke my brain initially, due to
+% me thinking of TEXT and how we type from the top of the doc to the bottom.
+% lower right, per https://tex.stackexchange.com/a/632509/17482
+% if the QR square is bigger than 2cm, it bleeds outside of page:
+\put(\paperwidth-1cm-5mm,2mm){\includegraphics[height=5mm]{qr_of_hello.png}}
+}
+
+\begin{document}
+\pagenumbering{gobble}
+\abovedisplayskip=0pt
+\abovedisplayshortskip=0pt
+\belowdisplayskip=0pt
+\belowdisplayshortskip=0pt
+\abovecaptionskip=0pt
+\belowcaptionskip=0pt
+
+
+{\fontsize{8}{8}\selectfont (KRSREPLACEMEID.)} KRSREPLACEMEPROMPT
+
+\end{document}

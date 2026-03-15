@@ -86,7 +86,7 @@ class Assemblor:
     def print_one_worksheet(self, worksheet, *, pagenum):
         logger.info('print_one_worksheet')
         template = os.path.normpath(os.path.join(
-            os.path.dirname(__file__), 'simple_tex', 'subpage_of_worksheet.tex'))
+            os.path.dirname(__file__), 'simple_tex', 'subpage_of_worksheet_w_7.tex'))
         contents = Path(template).read_text()
         contents = self._with_image_paths_interpolated(contents)
 
@@ -136,7 +136,7 @@ class Assemblor:
         self._even_odd_batch.add_page(path_to_page_pdf=ws_path_in_scratchdir)
 
     def template_for_whole_page(self):
-        name = 'one_whole_worksheet_page_v2.tex'
+        name = 'one_whole_worksheet_page_w_7.tex'
         template = os.path.normpath(os.path.join(
             os.path.dirname(__file__), 'simple_tex', name))
         contents = Path(template).read_text()

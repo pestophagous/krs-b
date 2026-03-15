@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 logger = logging.getLogger('krs_studying.' + __name__)
 
 # FUTURE: different possibilities for items-per-page.
-_ITEMS_PER_WS_PAGE = 2
+_ITEMS_PER_WS_PAGE = 7
 # FUTURE: cli (and toml config) option (for plots-as-answers):
 _ITEMS_PER_AK_PAGE = 18  # need to lower when answers are large plots
 
